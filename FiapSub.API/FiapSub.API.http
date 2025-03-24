@@ -1,0 +1,6 @@
+@FiapSub.API_HostAddress = http://localhost:5210
+
+GET {{FiapSub.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapSub.Core", "FiapSub.Core\FiapSub.Core.csproj", "{45688D8D-E68A-4027-B7B7-812628B3E8E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapSub.API", "FiapSub.API\FiapSub.API.csproj", "{C3D2DCBE-F7F2-4F0A-BD4A-D7775E2F61D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapSub.Infra", "FiapSub.Infra\FiapSub.Infra.csproj", "{F26BBFB8-523D-4850-8114-9BE1A227EEFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45688D8D-E68A-4027-B7B7-812628B3E8E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45688D8D-E68A-4027-B7B7-812628B3E8E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45688D8D-E68A-4027-B7B7-812628B3E8E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45688D8D-E68A-4027-B7B7-812628B3E8E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D2DCBE-F7F2-4F0A-BD4A-D7775E2F61D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D2DCBE-F7F2-4F0A-BD4A-D7775E2F61D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D2DCBE-F7F2-4F0A-BD4A-D7775E2F61D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D2DCBE-F7F2-4F0A-BD4A-D7775E2F61D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F26BBFB8-523D-4850-8114-9BE1A227EEFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F26BBFB8-523D-4850-8114-9BE1A227EEFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F26BBFB8-523D-4850-8114-9BE1A227EEFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F26BBFB8-523D-4850-8114-9BE1A227EEFD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
