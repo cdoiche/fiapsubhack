@@ -1,0 +1,2 @@
+namespace FiapSub.Core.Interfaces;
+
