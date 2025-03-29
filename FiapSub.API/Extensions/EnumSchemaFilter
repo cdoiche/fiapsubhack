@@ -1,0 +1,33 @@
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+
+namespace FiapSub.API;
+/// <summary>
+/// Custom schema filter to display enum values with their Display attribute names in Swagger UI.
+/// </summary>
+/// <remarks>
+/// This filter modifies the OpenApiSchema for enum types to include the Display attribute names as enum values.
+/// </remarks>
+public class EnumSchemaFilter : ISchemaFilter
+{
+    public void Apply(OpenApiSchema schema, SchemaFilterContext context)
+    {
+        if (context.Type.IsEnum)
+        {
+            schema.Enum.Clear();
+            var enumType = context.Type;
+            var enumValues = Enum.GetValues(enumType);
+
+            foreach (var value in enumValues)
+            {
+                var memberInfo = enumType.GetMember(value.ToString())[0];
+                var displayAttribute = memberInfo.GetCustomAttribute<DisplayAttribute>();
+                var description = displayAttribute?.Name ?? value.ToString();
+
+                schema.Enum.Add(new OpenApiString(description));
+            }
+        }
+    }
+}
