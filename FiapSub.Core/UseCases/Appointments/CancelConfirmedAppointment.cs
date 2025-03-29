@@ -6,10 +6,20 @@ namespace FiapSub.Core.UseCases.Appointments;
 public class CancelConfirmedAppointmentUseCase
 {
     private readonly IAppointmentRepository _appointmentRepository;
+    private readonly INotificationService _notificationService;
+    private readonly IPatientRepository _patientRepository;
+    private readonly IDoctorRepository _doctorRepository;
 
-    public CancelConfirmedAppointmentUseCase(IAppointmentRepository appointmentRepository)
+    public CancelConfirmedAppointmentUseCase(
+        IAppointmentRepository appointmentRepository,
+        INotificationService notificationService,
+        IPatientRepository patientRepository,
+        IDoctorRepository doctorRepository)
     {
         _appointmentRepository = appointmentRepository;
+        _notificationService = notificationService;
+        _patientRepository = patientRepository;
+        _doctorRepository = doctorRepository;
     }
 
     public async Task ExecuteAsync(int userId, int appointmentId, string userType, string? cancellationReason = null)
@@ -44,5 +54,11 @@ public class CancelConfirmedAppointmentUseCase
 
         appointment.Cancel(cancellationReason);
         await _appointmentRepository.UpdateAsync(appointment);
+
+        var patient = await _patientRepository.GetByIdAsync(appointment.PatientId);
+        var doctor = await _doctorRepository.GetByIdAsync(appointment.DoctorId);
+
+        await _notificationService.NotifyAppointmentCancelledAsync(appointment.Id, patient.Email, cancellationReason);
+        await _notificationService.NotifyAppointmentCancelledAsync(appointment.Id, doctor.Email, cancellationReason);
     }
 }

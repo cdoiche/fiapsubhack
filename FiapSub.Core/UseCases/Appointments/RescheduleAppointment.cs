@@ -8,13 +8,22 @@ public class RescheduleAppointmentUseCase
 {
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IDoctorAvailabilityRepository _doctorAvailabilityRepository;
+    private readonly INotificationService _notificationService;
+    private readonly IPatientRepository _patientRepository;
+    private readonly IDoctorRepository _doctorRepository;
 
     public RescheduleAppointmentUseCase(
         IAppointmentRepository appointmentRepository,
-        IDoctorAvailabilityRepository doctorAvailabilityRepository)
+        IDoctorAvailabilityRepository doctorAvailabilityRepository,
+        INotificationService notificationService,
+        IPatientRepository patientRepository,
+        IDoctorRepository doctorRepository)
     {
         _appointmentRepository = appointmentRepository;
         _doctorAvailabilityRepository = doctorAvailabilityRepository;
+        _notificationService = notificationService;
+        _patientRepository = patientRepository;
+        _doctorRepository = doctorRepository;
     }
 
     public async Task ExecuteAsync(int appointmentId, int newAvailabilityId, string? cancellationReason = null)
@@ -46,11 +55,20 @@ public class RescheduleAppointmentUseCase
         appointment.Cancel(cancellationReason);
         await _appointmentRepository.UpdateAsync(appointment);
 
+        var patient = await _patientRepository.GetByIdAsync(appointment.PatientId);
+        var doctor = await _doctorRepository.GetByIdAsync(availability.DoctorId);
+
+        await _notificationService.NotifyAppointmentCancelledAsync(appointment.Id, patient.Email, cancellationReason);
+        await _notificationService.NotifyAppointmentCancelledAsync(appointment.Id, doctor.Email, cancellationReason);
+
         var newAppointment = new Appointment(appointment.PatientId, availability.DoctorId, availability.StartTime);
 
         availability.Block();
         await _doctorAvailabilityRepository.UpdateAvailabilityAsync(availability);
 
         await _appointmentRepository.AddAsync(newAppointment);
+
+        await _notificationService.NotifyAppointmentScheduledAsync(appointment.Id, patient.Email);
+        await _notificationService.NotifyAppointmentScheduledAsync(appointment.Id, doctor.Email);
     }
 }

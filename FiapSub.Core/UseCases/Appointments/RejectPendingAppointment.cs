@@ -6,10 +6,17 @@ namespace FiapSub.Core.UseCases.Appointments;
 public class RejectPendingAppointmentUseCase
 {
     private readonly IAppointmentRepository _appointmentRepository;
+    private readonly INotificationService _notificationService;
+    private readonly IPatientRepository _patientRepository;
 
-    public RejectPendingAppointmentUseCase(IAppointmentRepository appointmentRepository)
+    public RejectPendingAppointmentUseCase(
+        IAppointmentRepository appointmentRepository,
+        INotificationService notificationService,
+        IPatientRepository patientRepository)
     {
         _appointmentRepository = appointmentRepository;
+        _notificationService = notificationService;
+        _patientRepository = patientRepository;
     }
 
     public async Task ExecuteAsync(int doctorId, int appointmentId, string? rejectionReason = null)
@@ -43,5 +50,8 @@ public class RejectPendingAppointmentUseCase
 
         appointment.Reject(rejectionReason);
         await _appointmentRepository.UpdateAsync(appointment);
+
+        var patient = await _patientRepository.GetByIdAsync(appointment.PatientId);
+        await _notificationService.NotifyAppointmentCancelledAsync(appointment.Id, patient.Email, rejectionReason);
     }
 }

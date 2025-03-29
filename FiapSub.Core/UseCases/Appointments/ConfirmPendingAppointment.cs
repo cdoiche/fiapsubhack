@@ -6,10 +6,17 @@ namespace FiapSub.Core.UseCases.Appointments;
 public class ConfirmPendingAppointmentUseCase
 {
     private readonly IAppointmentRepository _appointmentRepository;
+    private readonly INotificationService _notificationService;
+    private readonly IPatientRepository _patientRepository;
 
-    public ConfirmPendingAppointmentUseCase(IAppointmentRepository appointmentRepository)
+    public ConfirmPendingAppointmentUseCase(
+        IAppointmentRepository appointmentRepository,
+        INotificationService notificationService,
+        IPatientRepository patientRepository)
     {
         _appointmentRepository = appointmentRepository;
+        _notificationService = notificationService;
+        _patientRepository = patientRepository;
     }
 
     public async Task ExecuteAsync(int doctorId, int appointmentId)
@@ -43,5 +50,8 @@ public class ConfirmPendingAppointmentUseCase
 
         appointment.Confirm();
         await _appointmentRepository.UpdateAsync(appointment);
+
+        var patient = await _patientRepository.GetByIdAsync(appointment.PatientId);
+        await _notificationService.NotifyAppointmentConfirmedAsync(appointment.Id, patient.Email);
     }
 }
