@@ -23,4 +23,9 @@ public class DoctorAvailability
     {
         IsAvailable = false;
     }
+
+    public void Unblock()
+    {
+        IsAvailable = true;
+    }
 }

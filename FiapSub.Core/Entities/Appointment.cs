@@ -13,9 +13,6 @@ public class Appointment
 
     public Appointment(int patientId, int doctorId, DateTime dateTime)
     {
-        if (dateTime < DateTime.Now.AddHours(4))
-            throw new ArgumentException("Appointment must be scheduled at least 4 hours in advance.");
-        
         PatientId = patientId;
         DoctorId = doctorId;
         DateTime = dateTime;
@@ -44,8 +41,8 @@ public class Appointment
 
     public void Cancel(string? reason)
     {
-        if (Status != AppointmentStatus.Confirmed)
-            throw new InvalidOperationException("Only confirmed appointments can be cancelled.");
+        if (Status == AppointmentStatus.Cancelled)
+            throw new InvalidOperationException("This appointment is already cancelled.");
 
         Status = AppointmentStatus.Cancelled;
 
