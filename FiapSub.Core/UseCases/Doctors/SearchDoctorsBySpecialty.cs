@@ -13,9 +13,9 @@ public class SearchDoctorsBySpecialtyUseCase
     }
     public async Task<IEnumerable<Doctor>> ExecuteAsync(Specialty specialty)
     {
-        if (string.IsNullOrWhiteSpace(specialty.ToString()))
+        if (!Enum.IsDefined(typeof(Specialty), specialty))
         {
-            throw new ArgumentException("Specialty is required.");
+            throw new ArgumentException("Specialty is required and must be valid.");
         }
 
         var doctors = await _doctorRepository.SearchBySpecialtyAsync(specialty);
