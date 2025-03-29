@@ -1,0 +1,47 @@
+using FiapSub.Core.Enums;
+using FiapSub.Core.Interfaces;
+
+namespace FiapSub.Core.UseCases.Appointments;
+
+public class RejectPendingAppointmentUseCase
+{
+    private readonly IAppointmentRepository _appointmentRepository;
+
+    public RejectPendingAppointmentUseCase(IAppointmentRepository appointmentRepository)
+    {
+        _appointmentRepository = appointmentRepository;
+    }
+
+    public async Task ExecuteAsync(int doctorId, int appointmentId, string? rejectionReason = null)
+    {
+        if (doctorId <= 0)
+        {
+            throw new ArgumentException("Invalid doctor ID.");
+        }
+
+        if (appointmentId <= 0)
+        {
+            throw new ArgumentException("Invalid appointment ID.");
+        }
+
+        var appointment = await _appointmentRepository.GetByIdAsync(appointmentId);
+
+        if (appointment == null)
+        {
+            throw new KeyNotFoundException("Appointment not found.");
+        }
+
+        if (appointment.DoctorId != doctorId)
+        {
+            throw new UnauthorizedAccessException("You are not authorized to reject this appointment.");
+        }
+
+        if (appointment.Status != AppointmentStatus.Pending)
+        {
+            throw new InvalidOperationException("Only pending appointments can be rejected.");
+        }
+
+        appointment.Reject(rejectionReason);
+        await _appointmentRepository.UpdateAsync(appointment);
+    }
+}
