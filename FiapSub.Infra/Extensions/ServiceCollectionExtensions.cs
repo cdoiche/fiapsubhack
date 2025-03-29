@@ -14,6 +14,12 @@ public static class ServiceCollectionExtenions
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlite(connectionString));
 
+        using (var serviceProvider = services.BuildServiceProvider())
+        {
+            var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+            dbContext.Database.Migrate();
+        }
+
         services.AddScoped<IPatientRepository, PatientRepository>();
         services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         services.AddScoped<IDoctorAvailabilityRepository, DoctorAvailabilityRepository>();

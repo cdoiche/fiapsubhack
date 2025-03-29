@@ -1,0 +1,25 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./FiapSub.API/Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5000
+      - ConnectionStrings__DefaultConnection=Data Source=/data/app.db
+    volumes:
+      - appdata:/data
+    depends_on:
+      - db
+
+  db:
+    image: nouchka/sqlite3:latest
+    volumes:
+      - appdata:/data
+    environment:
+      - SQLITE_DATABASE=/data/app.db
+
+volumes:
+  appdata:
