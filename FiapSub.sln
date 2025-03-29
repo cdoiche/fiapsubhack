@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapSub.API", "FiapSub.API\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapSub.Infra", "FiapSub.Infra\FiapSub.Infra.csproj", "{F26BBFB8-523D-4850-8114-9BE1A227EEFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiapSub.Tests", "FiapSub.Tests\FiapSub.Tests.csproj", "{3603D5E0-1D04-4A7D-A269-F7F18E6C98D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{F26BBFB8-523D-4850-8114-9BE1A227EEFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F26BBFB8-523D-4850-8114-9BE1A227EEFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F26BBFB8-523D-4850-8114-9BE1A227EEFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3603D5E0-1D04-4A7D-A269-F7F18E6C98D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3603D5E0-1D04-4A7D-A269-F7F18E6C98D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3603D5E0-1D04-4A7D-A269-F7F18E6C98D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3603D5E0-1D04-4A7D-A269-F7F18E6C98D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
