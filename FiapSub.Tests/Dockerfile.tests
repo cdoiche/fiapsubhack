@@ -1,0 +1,16 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0.300 AS build
+WORKDIR /app
+
+COPY FiapSub.sln ./
+COPY FiapSub.API/FiapSub.API.csproj FiapSub.API/
+COPY FiapSub.Core/FiapSub.Core.csproj FiapSub.Core/
+COPY FiapSub.Infra/FiapSub.Infra.csproj FiapSub.Infra/
+COPY FiapSub.Tests/FiapSub.Tests.csproj FiapSub.Tests/
+
+RUN dotnet restore
+
+COPY . ./
+
+RUN dotnet build --configuration Debug
+
+CMD ["dotnet", "test", "/app/FiapSub.Tests/FiapSub.Tests.csproj", "--configuration", "Debug"]

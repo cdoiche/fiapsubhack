@@ -21,5 +21,15 @@ services:
     environment:
       - SQLITE_DATABASE=/data/app.db
 
+  tests:
+    build:
+      context: .
+      dockerfile: ./FiapSub.Tests/Dockerfile.tests
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - TZ=America/Sao_Paulo
+    depends_on:
+      - db
+
 volumes:
   appdata:
