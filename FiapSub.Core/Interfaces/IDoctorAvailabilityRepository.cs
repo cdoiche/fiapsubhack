@@ -15,6 +15,7 @@ public interface IDoctorAvailabilityRepository
 
     Task<IEnumerable<DoctorAvailability>> GetAvailableSlotsAsync(int doctorId);
     Task<DoctorAvailability> GetAvailabilityByIdAsync(int availabilityId);
+    Task<bool> ExistsAsync(int doctorId, DateTime start, DateTime end);
 
     Task UpdateAvailabilityAsync(DoctorAvailability availability);
 
