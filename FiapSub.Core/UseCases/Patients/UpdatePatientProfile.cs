@@ -21,8 +21,7 @@ public class UpdatePatientProfileUseCase
 
         if (!string.IsNullOrEmpty(patientName)) {
             patient.UpdateProfile(patientName, patientPhone);
-        }
-
-        await _patientRepository.UpdateAsync(patient);
+            await _patientRepository.UpdateAsync(patient);
+        }   
     }
 }
